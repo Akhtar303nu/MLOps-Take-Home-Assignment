@@ -47,7 +47,7 @@ regardless of what the live data's actual distribution would produce.
 
 ## Prerequisites
 
-- **Python 3.11** — install via `brew install python@3.11` (locally tested on 3.11.14)
+- **Python 3.11** — tested on 3.11.14
 - **Docker & Docker Compose**
 - **Make**
 
