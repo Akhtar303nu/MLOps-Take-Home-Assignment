@@ -8,6 +8,7 @@ on training data (medians, scaler params). During inference, the caller must
 pass in the FittedFeatures instance from the training run — never recompute
 from live data.
 """
+
 from __future__ import annotations
 
 import logging
@@ -70,12 +71,15 @@ def _add_derived(df: pd.DataFrame, monthly_median: float) -> pd.DataFrame:
     """
     df = df.copy()
     df["HighValueFiber"] = (
-        (df["InternetService"] == "Fiber optic") & (df["MonthlyCharges"] > monthly_median)
+        (df["InternetService"] == "Fiber optic")
+        & (df["MonthlyCharges"] > monthly_median)
     ).astype(int)
     return df
 
 
-def fit_and_transform(df: pd.DataFrame) -> tuple[np.ndarray, np.ndarray, FittedFeatures]:
+def fit_and_transform(
+    df: pd.DataFrame,
+) -> tuple[np.ndarray, np.ndarray, FittedFeatures]:
     """Fit feature pipeline on training data.
 
     Returns:

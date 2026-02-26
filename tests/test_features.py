@@ -3,6 +3,7 @@
 These tests run with no external dependencies — no MLflow server, no database.
 Every test exercises a real invariant, not a happy-path smoke test.
 """
+
 from __future__ import annotations
 
 import numpy as np

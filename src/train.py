@@ -14,6 +14,7 @@ Usage:
     python -m src.train --data data/telco.csv
     python -m src.train --data data/telco.csv --promote-to-production
 """
+
 from __future__ import annotations
 
 import argparse
@@ -25,6 +26,7 @@ import warnings
 from pathlib import Path
 
 import matplotlib
+
 matplotlib.use("Agg")  # non-interactive backend — required in containers / CI
 import matplotlib.pyplot as plt
 import mlflow
@@ -75,9 +77,13 @@ RF_PARAMS: dict = {
 # ── Helpers ───────────────────────────────────────────────────────────────────
 def _git_sha() -> str:
     try:
-        return subprocess.check_output(
-            ["git", "rev-parse", "--short", "HEAD"], stderr=subprocess.DEVNULL
-        ).decode().strip()
+        return (
+            subprocess.check_output(
+                ["git", "rev-parse", "--short", "HEAD"], stderr=subprocess.DEVNULL
+            )
+            .decode()
+            .strip()
+        )
     except Exception:
         return "unknown"
 
@@ -163,13 +169,15 @@ def train(data_path: str, promote_to_production: bool = False) -> str:
     with mlflow.start_run() as run:
         run_id = run.info.run_id
 
-        mlflow.set_tags({
-            "git_commit": _git_sha(),
-            "data_path": str(data_path),
-            "n_train": len(X_train),
-            "n_test": len(X_test),
-            "churn_rate_train_pct": round(float(y_train.mean()) * 100, 2),
-        })
+        mlflow.set_tags(
+            {
+                "git_commit": _git_sha(),
+                "data_path": str(data_path),
+                "n_train": len(X_train),
+                "n_test": len(X_test),
+                "churn_rate_train_pct": round(float(y_train.mean()) * 100, 2),
+            }
+        )
 
         mlflow.log_params(RF_PARAMS)
         mlflow.log_param("features", FEATURE_COLS)
@@ -242,13 +250,16 @@ def train(data_path: str, promote_to_production: bool = False) -> str:
                 mlflow.set_tag("promoted_to", "Production (improved)")
                 logger.info(
                     "Production updated v%s: f1_churn %.4f → %.4f",
-                    latest_version, prod_f1, metrics["f1_churn"],
+                    latest_version,
+                    prod_f1,
+                    metrics["f1_churn"],
                 )
             else:
                 mlflow.set_tag("promoted_to", "Staging (did not beat Production)")
                 logger.warning(
                     "Candidate f1=%.4f did not beat Production f1=%.4f — no promotion",
-                    metrics["f1_churn"], prod_f1,
+                    metrics["f1_churn"],
+                    prod_f1,
                 )
 
         logger.info("Done. Run ID: %s", run_id)
