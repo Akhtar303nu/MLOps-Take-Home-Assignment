@@ -169,3 +169,4 @@ class TestFittedFeaturesSerialization:
         assert "monthly_charges_median" in d
         assert "scaler_mean" in d
         assert "scaler_scale" in d
+

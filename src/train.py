@@ -268,3 +268,4 @@ if __name__ == "__main__":
     run_id = train(args.data, promote_to_production=args.promote_to_production)
     print(f"\nRun ID: {run_id}")
     print(f"UI:     {os.environ.get('MLFLOW_TRACKING_URI', 'http://localhost:5000')}")
+
