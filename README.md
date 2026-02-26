@@ -23,7 +23,7 @@ src/serve.py       — FastAPI inference endpoint. Loads Production model + Fitt
                      from MLflow at startup. Exposes /predict and /health.
 tests/             — 17 unit tests that verify the feature pipeline correctness,
                      including the training-serving skew test.
-docker-compose.yml — MLflow server + PostgreSQL (metadata) + MinIO/S3 (artifacts).
+docker-compose.yaml — MLflow server + PostgreSQL (metadata) + MinIO/S3 (artifacts).
 Dockerfile         — Training image (python:3.11-slim).
 Dockerfile.serve   — Inference image. Separate from training — no training dependencies.
 .github/workflows/ — CI: lint (flake8 + black) + test + docker build on every PR.
