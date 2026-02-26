@@ -133,4 +133,3 @@ def transform(df: pd.DataFrame, fitted: FittedFeatures) -> np.ndarray:
     scaler.n_features_in_ = len(FEATURE_COLS)
 
     return scaler.transform(X)
-
