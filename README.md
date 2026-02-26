@@ -47,7 +47,7 @@ regardless of what the live data's actual distribution would produce.
 
 ## Prerequisites
 
-- **Python 3.11** — install via `brew install python@3.11` (Python 3.13 is not yet supported by the ML stack; pyarrow and mlflow require pre-built wheels only available on 3.11)
+- **Python 3.11** — install via `brew install python@3.11` (locally tested on 3.11.14)
 - **Docker & Docker Compose**
 - **Make**
 
@@ -142,7 +142,7 @@ This prevents a regression from silently overwriting a good production model.
 ### Feature Store
 
 In production I would use **Feast** with a Redis online store (for <5ms
-inference latency) and Azure Blob offline store (for training). The critical
+inference latency) and Azure Blob offline store (for training) or Vertex AI Feature Store (if on GCP). The critical
 requirement is point-in-time correct joins for the offline store — computing
 a feature using data that was not available at the time of the label would
 be target leakage.
