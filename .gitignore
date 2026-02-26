@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.venv/
+.env
+mlruns/
+mlartifacts/
+.pytest_cache/
+.coverage
+htmlcov/
+/tmp/.DS_Store
